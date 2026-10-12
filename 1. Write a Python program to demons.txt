@@ -1,0 +1,599 @@
+1. Write a Python program to demonstrate the Password Strength Analyzer technique. 
+The program should:  
+ Accept a password from the user.  
+ Evaluate the password based on its length, uppercase and lowercase letters, digits, and 
+special characters.  
+ Classify the password as Weak, Moderate, or Strong.  
+ Display the password strength along with suggestions to improve it. 
+import string 
+password = input("Enter any password: ") 
+score = 0 
+if len(password) >= 8: 
+score += 1 
+if any(char.isupper() for char in password): 
+score += 1 
+if any(char.islower() for char in password): 
+score += 1 
+if any(char.isdigit() for char in password): 
+score += 1 
+if any(char in string.punctuation for char in password): 
+score += 1 
+print(score) 
+print("\n--- Password Analyzer ---") 
+if score <= 2: 
+print("Password is Weak.") 
+elif score <= 4: 
+print("Password is Moderate.") 
+else: 
+print("Password is Strong.") 
+print("\n--- Password Suggestions ---") 
+if len(password) < 8: 
+print("Password length must be at least 8 characters.") 
+if not any(char.isupper() for char in password): 
+print("Password must have at least one uppercase letter.") 
+if not any(char.islower() for char in password): 
+print("Password must have at least one lowercase letter.") 
+if not any(char.isdigit() for char in password): 
+print("Password must have at least one digit.") 
+if not any(char in string.punctuation for char in password): 
+print("Password must have at least one special symbol.") 
+Output: 
+Enter any password: Admin123 --- Password Analyzer --- 
+Password is Moderate. --- Password Suggestions --- 
+Password must have at least one special symbol. 
+
+
+
+
+2. Write a Python program to demonstrate the Brute Force Password Attack 
+Simulation technique. The program should:  
+ Accept a predefined password.  
+ Generate all possible password combinations using lowercase alphabets.  
+ Compare each generated password with the target password.  
+ Display the discovered password and the total number of attempts required. 
+import itertools 
+import string 
+import time 
+enterd_password=input("enter any password: ") 
+found=False 
+atempts=0 
+start_time = time.time() 
+for length in range(1,len(enterd_password)+1): 
+for guess in itertools.product(string.ascii_lowercase,repeat=length): 
+atempts=atempts+1 
+guessed_password="".join(guess) 
+if guessed_password==enterd_password: 
+found = True 
+print("password Found") 
+print("Found Password is: ", guessed_password) 
+print("Attempts Taken : ",atempts) 
+end_time = time.time() 
+print(f"Time Taken: {end_time - start_time:.4f} seconds") 
+break 
+if found: 
+break 
+if not found: 
+print("password not Found") 
+Output: 
+enter any password: car 
+password Found 
+Found Password is:  car 
+Attempts Taken :  2072 
+Time Taken: 0.0023 seconds 
+
+
+
+
+
+3. Write a Python program to demonstrate the Dictionary Password Attack Simulation 
+technique. The program should:  
+ Accept a target password from the user.  
+ Read passwords from a predefined dictionary list.  
+ Compare each dictionary word with the target password.  
+ Display whether the password is found in the dictionary. 
+# Predefined dictionary of common passwords 
+password_dictionary = [ 
+"123456", 
+"password", 
+"admin", 
+"welcome", 
+"qwerty", 
+"abc123", 
+"letmein", 
+"iloveyou", 
+"pass123", 
+"admin123" 
+] 
+# Accept target password from the user 
+target_password = input("Enter the target password: ") 
+# Variable to check whether password is found 
+found = False 
+# Compare target password with each dictionary password 
+for password in password_dictionary: 
+if password == target_password: 
+found = True 
+break 
+# Display the result 
+print("\n----- Dictionary Attack Result -----") 
+if found: 
+print("Password Found in Dictionary!") 
+print("The password is:", target_password) 
+print("This password is weak and can be easily guessed.") 
+else: 
+print("Password Not Found in Dictionary.") 
+print("This password is not present in the predefined dictionary.") 
+Output: 
+Enter the target password: hello 
+----- Dictionary Attack Result ----- 
+Password Not Found in Dictionary. 
+This password is not present in the predefined dictionary. 
+
+
+
+
+4. Write a Python program to demonstrate the Secure Password Generator technique. 
+The program should:  
+ Accept the desired password length from the user.  
+ Generate a random password containing uppercase letters, lowercase letters, digits, 
+and special characters.  
+ Display the generated password.  
+ Ensure the generated password satisfies strong password requirements. 
+import random 
+import string 
+# Accept password length from the user 
+length = int(input("Enter the desired password length (minimum 8): ")) 
+# Check minimum length 
+if length < 8: 
+print("Password length should be at least 8 characters.") 
+else: 
+# Character sets 
+uppercase = string.ascii_uppercase 
+lowercase = string.ascii_lowercase 
+digits = string.digits 
+special = string.punctuation 
+# Ensure at least one character from each category 
+password = [ 
+random.choice(uppercase), 
+random.choice(lowercase), 
+random.choice(digits), 
+random.choice(special) 
+] 
+# Remaining characters 
+all_characters = uppercase + lowercase + digits + special 
+for i in range(length - 4): 
+password.append(random.choice(all_characters)) 
+# Shuffle the password to randomize character positions 
+random.shuffle(password) 
+# Convert list to string 
+password = "".join(password) 
+# Display generated password 
+print("\nGenerated Secure Password:") 
+print(password) 
+print("\nPassword satisfies strong password requirements.") 
+Output:  
+Enter the desired password length (minimum 8): 9 
+Generated Secure Password: 
+018Pce(\E 
+Password satisfies strong password requirements. 
+
+
+
+
+5. Write a Python program to demonstrate the URL Phishing Detection technique. The 
+program should:  
+ Accept a URL from the user.  
+ Analyze the URL for phishing indicators.  
+ Display whether the URL is legitimate or suspicious.  
+ Provide the reason for the classification. 
+from urllib.parse import urlparse 
+# Accept URL from the user 
+url = input("Enter a URL: ") 
+# List to store phishing reasons 
+reasons = [] 
+# Parse the URL 
+parsed_url = urlparse(url) 
+domain = parsed_url.netloc 
+# Check 1: HTTPS 
+if not url.startswith("https://"): 
+reasons.append("URL does not use HTTPS.") 
+# Check 2: Presence of '@' symbol 
+if "@" in url: 
+reasons.append("URL contains '@' symbol.") 
+# Check 3: Presence of IP address instead of domain name 
+parts = domain.split(".") 
+if len(parts) == 4 and all(part.isdigit() for part in parts): 
+reasons.append("URL uses an IP address instead of a domain name.") 
+# Check 4: Too many hyphens 
+if domain.count("-") >= 2: 
+reasons.append("Domain contains multiple hyphens.") 
+# Check 5: Excessive URL length 
+if len(url) > 75: 
+reasons.append("URL is unusually long.") 
+# Check 6: Too many subdomains 
+if domain.count(".") > 3: 
+reasons.append("URL contains too many subdomains.") 
+# Display Result 
+print("\n----- URL Phishing Detection Result -----") 
+if len(reasons) == 0: 
+print("The URL appears to be LEGITIMATE.") 
+else: 
+print("The URL appears to be SUSPICIOUS.") 
+print("\nReasons:") 
+for reason in reasons: 
+print("-", reason) 
+Output: 
+Enter a URL: http://192.168.1.10/login@bank-security.com ----- URL Phishing Detection Result ----- 
+The URL appears to be SUSPICIOUS. 
+Reasons: - URL does not use HTTPS. - URL contains '@' symbol. - URL uses an IP address instead of a domain name. 
+
+
+
+
+6. Write a Python program to demonstrate the Caesar Cipher technique. The program 
+should:  
+ Accept a plaintext message from the user.  
+ Accept a key (shift value) from the user.  
+ Encrypt the plaintext using the Caesar Cipher algorithm.  
+ Display the original plaintext and the corresponding Cipher Text. 
+# Accept plaintext from the user 
+plaintext = input("Enter the plaintext message: ") 
+# Accept the shift key 
+key = int(input("Enter the shift value (key): ")) 
+ciphertext = "" 
+# Encrypt each character 
+for char in plaintext: 
+if char.isalpha(): 
+if char.isupper(): 
+ciphertext += chr((ord(char) - ord('A') + key) % 26 + ord('A')) 
+else: 
+ciphertext += chr((ord(char) - ord('a') + key) % 26 + ord('a')) 
+else: 
+# Keep spaces, numbers, and symbols unchanged 
+ciphertext += char 
+# Display the result 
+print("\n----- Caesar Cipher Encryption -----") 
+print("Original Plaintext :", plaintext) 
+print("Cipher Text        :", ciphertext) 
+Output: 
+Enter the plaintext message: hello 
+Enter the shift value (key): 3 ----- Caesar Cipher Encryption ----- 
+Original Plaintext : hello 
+Cipher Text        : khoor 
+
+
+
+
+7. Write a Python program to demonstrate the Shift Cipher technique. The program 
+should:  
+ Accept a plaintext message from the user.  
+ Accept a key (shift value) from the user.  
+ Encrypt the plaintext using the Shift Cipher algorithm.  
+ Display the original plaintext and the corresponding Cipher Text. 
+# Accept plaintext from the user 
+plaintext = input("Enter the plaintext message: ") 
+# Accept shift key 
+key = int(input("Enter the shift value (key): ")) 
+ciphertext = "" 
+# Encrypt the plaintext 
+for char in plaintext: 
+if char.isalpha(): 
+if char.isupper(): 
+ciphertext += chr((ord(char) - ord('A') + key) % 26 + ord('A')) 
+else: 
+ciphertext += chr((ord(char) - ord('a') + key) % 26 + ord('a')) 
+else: 
+# Keep spaces, numbers, and symbols unchanged 
+ciphertext += char 
+# Display the result 
+print("\n----- Shift Cipher Encryption -----") 
+print("Original Plaintext :", plaintext) 
+print("Cipher Text        :", ciphertext) 
+Output: 
+Enter the plaintext message: hello 
+Enter the shift value (key): 4 ----- Shift Cipher Encryption ----- 
+Original Plaintext : hello 
+Cipher Text        : lipps 
+
+
+
+
+8. Write a Python program to demonstrate the Vigenère Cipher technique. The 
+program should: 
+ Accept a plaintext message from the user.  
+ Accept a keyword from the user.  
+ Encrypt the plaintext using the Vigenère Cipher algorithm.  
+ Display the original plaintext and the corresponding Cipher Text 
+# Accept plaintext and keyword from the user 
+plaintext = input("Enter the plaintext message: ") 
+keyword = input("Enter the keyword: ") 
+ciphertext = "" 
+key_index = 0 
+# Encrypt the plaintext 
+for char in plaintext: 
+if char.isalpha(): 
+# Get the shift value from the keyword 
+shift = ord(keyword[key_index % len(keyword)].lower()) - ord('a') 
+if char.isupper(): 
+encrypted_char = chr((ord(char) - ord('A') + shift) % 26 + ord('A')) 
+else: 
+encrypted_char = chr((ord(char) - ord('a') + shift) % 26 + ord('a')) 
+ciphertext += encrypted_char 
+key_index += 1 
+else: 
+# Keep spaces, numbers, and special characters unchanged 
+ciphertext += char 
+# Display the result 
+print("\n----- Vigenère Cipher Encryption -----") 
+print("Original Plaintext :", plaintext) 
+print("Keyword            :", keyword) 
+print("Cipher Text        :", ciphertext) 
+Output: 
+Enter the plaintext message: hello 
+Enter the keyword: world ----- Vigenère Cipher Encryption ----- 
+Original Plaintext : hello 
+Keyword            : world 
+Cipher Text        : dscwr 
+
+
+
+9. Write a Python program to demonstrate the Message Integrity Verification using 
+SHA-256 algorithm. The program should:  
+ Accept a message from the user.  
+ Generate the SHA-256 hash value of the message.  
+ Modify the message and compare the new hash value.  
+ Display both hash values and verify the integrity of the message. 
+import hashlib 
+# Function to generate SHA-256 hash 
+def generate_hash(message): 
+return hashlib.sha256(message.encode()).hexdigest() 
+# Accept message from the user 
+message = input("Enter the original message: ") 
+# Generate hash of the original message 
+original_hash = generate_hash(message) 
+print("\nOriginal Message :", message) 
+print("Original SHA-256 Hash:") 
+print(original_hash) 
+# Modify the message 
+modified_message = input("\nEnter the modified message: ") 
+# Generate hash of the modified message 
+modified_hash = generate_hash(modified_message) 
+print("\nModified Message :", modified_message) 
+print("Modified SHA-256 Hash:") 
+print(modified_hash) 
+# Verify integrity 
+print("\n----- Message Integrity Verification -----") 
+if original_hash == modified_hash: 
+print("Integrity Verified.") 
+print("The message has NOT been modified.") 
+else: 
+print("Integrity Verification Failed.") 
+print("The message has been modified.") 
+Output: 
+Enter the original message: hello world 
+Original Message : hello world 
+Original SHA-256 Hash: 
+b94d27b9934d3e08a52e52d7da7dabfac484efe37a5380ee9088f7ace2efcde9 
+Enter the modified message: hello world 
+Modified Message : hello world 
+Modified SHA-256 Hash: 
+b94d27b9934d3e08a52e52d7da7dabfac484efe37a5380ee9088f7ace2efcde9 ----- Message Integrity Verification ----- 
+Integrity Verified. 
+The message has NOT been modified. 
+
+
+10. Write a Python program to demonstrate the Digital Signature using RSA algorithm. 
+The program should:  
+ Accept a message from the user.  
+ Generate RSA public and private keys.  
+ Generate a digital signature using the private key.  
+ Verify the signature using the public key and display the verification result. 
+from cryptography.hazmat.primitives.asymmetric import rsa, padding 
+from cryptography.hazmat.primitives import hashes 
+# Generate RSA Keys 
+private_key = rsa.generate_private_key( 
+public_exponent=65537, 
+key_size=2048 
+) 
+public_key = private_key.public_key() 
+# Original message 
+message = input("Enter the original message: ") 
+# Generate Signature 
+signature = private_key.sign( 
+message.encode(), 
+padding.PSS( 
+mgf=padding.MGF1(hashes.SHA256()), 
+salt_length=padding.PSS.MAX_LENGTH 
+), 
+hashes.SHA256() 
+) 
+print("\nDigital Signature Generated Successfully.") 
+# Message to verify 
+verify_message = input("Enter the message for verification: ") 
+# Verify Signature 
+try: 
+public_key.verify( 
+signature, 
+verify_message.encode(), 
+padding.PSS( 
+mgf=padding.MGF1(hashes.SHA256()), 
+salt_length=padding.PSS.MAX_LENGTH 
+), 
+hashes.SHA256() 
+) 
+print("\nSignature Verification Successful.") 
+print("The message is authentic and has not been modified.") 
+except Exception: 
+print("\nSignature Verification Failed.") 
+print("The message has been modified or the signature is invalid.") 
+Output: 
+Enter the original message: hello world 
+Digital Signature Generated Successfully. 
+Enter the message for verification: hello world 
+Signature Verification Successful. 
+The message is authentic and has not been modified. 
+
+
+
+
+ 
+13. Write a Python program to demonstrate the Data Encryption Standard (DES) 
+algorithm. The program should:  
+ Accept a plaintext message from the user.  
+ Accept a secret key.  
+ Encrypt the plaintext using DES.  
+ Display the original plaintext and encrypted Cipher Text. 
+#install the package pycryptodome to execute this program 
+from Crypto.Cipher import DES 
+from Crypto.Util.Padding import pad 
+# Read plaintext 
+plaintext = input("Enter Plaintext: ") 
+# Read key until it is exactly 8 characters 
+while True: 
+key = input("Enter 8-character Key: ") 
+if len(key) < 8: 
+print("Error: Key must be exactly 8 characters. Please try again.") 
+elif len(key) > 8: 
+print("Error: Key must be exactly 8 characters. Please try again.") 
+else: 
+break 
+# Create DES cipher 
+cipher = DES.new(key.encode(), DES.MODE_ECB) 
+# Encrypt the plaintext 
+ciphertext = cipher.encrypt(pad(plaintext.encode(), 8)) 
+# Display results 
+print("\nOriginal Plaintext :", plaintext) 
+print("Cipher Text        :", ciphertext.hex().upper()) 
+Output: ---DES Cipher Demonstration--- 
+Enter Plaintext: hello 
+Enter 8-character Key: adc 
+Error: Key must be exactly 8 characters. Please try again. 
+Enter 8-character Key: abcdefghujklemn 
+Error: Key must be exactly 8 characters. Please try again. 
+Enter 8-character Key: abcdefgh 
+Original Plaintext: hello 
+Cipher Text         
+: 48F8DDAC080A0698 
+
+
+
+
+14. Write a Python program to demonstrate the Advanced Encryption Standard (AES) 
+algorithm. The program should:  
+ Accept a plaintext message from the user.  
+ Accept a secret key.  
+ Encrypt the plaintext using AES.  
+ Display the original plaintext and encrypted Cipher Text. 
+#install the package pycryptodome to execute this program 
+from Crypto.Cipher import AES 
+from Crypto.Util.Padding import pad 
+from Crypto.Random import get_random_bytes 
+print("---AES Cipher Demonstation---") 
+# Read plaintext 
+plaintext = input("Enter Plaintext: ") 
+# Ask for AES key length 
+while True: 
+key_length = int(input("Enter Key Length (128, 192, or 256 bits): ")) 
+if key_length == 128: 
+key = get_random_bytes(16) 
+break 
+elif key_length == 192: 
+key = get_random_bytes(24) 
+break 
+elif key_length == 256: 
+key = get_random_bytes(32) 
+break 
+else: 
+print("Error: Enter only 128, 192, or 256.") 
+# Create AES cipher 
+cipher = AES.new(key, AES.MODE_ECB) 
+# Encrypt plaintext 
+ciphertext = cipher.encrypt(pad(plaintext.encode(), AES.block_size)) 
+# Display results 
+print("\nGenerated Secret Key :", key.hex().upper()) 
+print("Original Plaintext   :", plaintext 
+print("Cipher Text          :", ciphertext.hex().upper()) 
+Output: ---AES Cipher Demonstration--- 
+Enter Plaintext: hello Ravi 
+Enter Key Length (128, 192, or 256 bits): 100 
+Error: Enter only 128, 192, or 256. 
+Enter Key Length (128, 192, or 256 bits): 128 
+Generated Secret Key : 26F0D62A1A3833EF2523632B41F99ACB 
+Original Plain Text     : hello Ravi 
+Cipher Text                 : 03935E9CBC30B49D501E8B9412FB22A4 
+
+
+
+15. Write a Python program to demonstrate the Blowfish Algorithm technique. The 
+program should:  
+ Accept a plaintext message from the user.  
+ Accept a secret key.  
+ Encrypt the plaintext using Blowfish.  
+ Display the original plaintext and encrypted Cipher Text. 
+#install the package pycryptodome to execute this program 
+from Crypto.Cipher import Blowfish 
+from Crypto.Util.Padding import pad 
+print("---BLOWFISH Cipher Demonstration---") 
+# Read plaintext 
+plaintext = input("Enter Plaintext: ") 
+# Read secret key 
+while True: 
+key = input("Enter Secret Key (4 to 56 characters): ") 
+if 4 <= len(key) <= 56: 
+break 
+else: 
+print("Error: Key length must be between 4 and 56 characters.") 
+# Create Blowfish cipher 
+cipher = Blowfish.new(key.encode(), Blowfish.MODE_ECB) 
+# Encrypt plaintext 
+ciphertext = cipher.encrypt(pad(plaintext.encode(), Blowfish.block_size)) 
+# Display results 
+print("\nOriginal Plaintext :", plaintext) 
+print("Cipher Text        :", ciphertext.hex().upper()) 
+Output: ---BLOWFISH Cipher Demonstration--- 
+Enter Plaintext: hellooo 
+Enter Secret Key (4 to 56 characters): Security 
+Original Plaintext : hellooo 
+Cipher Text           
+: 6E4DC758FEDAB1ED 
+
+
+
+18. Write a Python program to demonstrate the Diffie–Hellman Key Exchange 
+algorithm. The program should:  
+ Accept public parameters and private keys of two users.  
+ Generate the public keys.  
+ Compute the shared secret key.  
+ Verify that both users obtain the same shared secret key. 
+# Diffie-Hellman Key Exchange stimulation 
+# Public parameters 
+p = int(input("Enter prime number (p): ")) 
+g = int(input("Enter generator (g): ")) 
+# Private keys 
+a = int(input("Enter private key of User A: ")) 
+b = int(input("Enter private key of User B: ")) 
+# Public keys 
+A = pow(g, a, p) 
+B = pow(g, b, p) 
+# Shared secret keys 
+keyA = pow(B, a, p) 
+keyB = pow(A, b, p) 
+# Display results 
+print("\n----- Diffie-Hellman Key Exchange -----") 
+print("Public Key of User A:", A) 
+print("Public Key of User B:", B) 
+print("Shared Secret Key (User A):", keyA) 
+print("Shared Secret Key (User B):", keyB) 
+if keyA == keyB: 
+print("Key Exchange Successful") 
+else: 
+print("Key Exchange Failed") 
+Output: 
+Enter prime number (p): 23 
+Enter generator (g): 5 
+Enter private key of User A: 6 
+Enter private key of User B: 15 ----- Diffie-Hellman Key Exchange ----- 
+Public Key of User A: 8 
+Public Key of User B: 19 
+Shared Secret Key (User A): 2 
+Shared Secret Key (User B): 2 
+Key Exchange Successful 
